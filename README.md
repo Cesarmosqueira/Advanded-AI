@@ -2,5 +2,5 @@
 
  - Repository for storing  Advanced Artificial Intelligence - CC206 source code.
 
-## PC1
-[Source](https://github.com/cesarmosqueira/advanced-ai/tree/master/pc1)
+## In this repo:
+  - PC1: JSSP with random sampling and genetic algorithms [Solution](https://github.com/Cesarmosqueira/Advanded-AI/tree/master/PC1)
