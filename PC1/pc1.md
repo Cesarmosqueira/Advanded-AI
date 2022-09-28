@@ -17,11 +17,16 @@
 For the problem discussed in class, JSSP, organize the python code (in a different language if you prefer) to test the random sampling solutions discussed in class.
 
 * (3 points) make the code reusable streamlined to test different instances of the problem.
+  - I actually don't know what kind of objected oriented programming
+    application I know is awful. But its reusable and streamlined to test
+    different instances of the problem. Fairly simple.
 
-* (2 points) run the random sampling method on the same 
-instances seen in CC206-Sesion6.pdf for exactly 3 minutes.
+* (2 points) run the random sampling method on the same instances seen in CC206-Sesion6.pdf for exactly 3 minutes.
+  - There is a random sampling solution ... fill this with an screenshot or smt
 
 * (2 points) present graphs of the results in a similar fashion as seen in CC206-Sesion6.pdf.
+  - Will probably add a different graph for the solution later. But the graphs
+    are still there.
 
 ## Part 2
 
