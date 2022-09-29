@@ -3,6 +3,14 @@ import random
 import matplotlib.pyplot as plt
 from datetime import datetime
 
+random.seed(datetime.now())
+def randomize_with_size(array, size):
+    res = []
+    for i in range(size):
+        res += [array[i % len(array)]]
+    random.shuffle(res)
+    return res
+
 # static data from the problem
 with open('demo') as f:
     n, m = [int(x) for x in f.readline().split()]
@@ -13,9 +21,10 @@ with open('demo') as f:
         i += 1
 
 class JSSP:
-    n=0
-    m=0
-    makespan=0
+    def __init__(self):
+        self.n=0
+        self.m=0
+        self.makespan=0
 
     def load_data(self, jobs, n, m):
         self.jobs = jobs
@@ -51,7 +60,6 @@ class JSSP:
         random.shuffle(l)
         return l
 
-
     def plot_graph(self, makespan):
         mstart = np.zeros((self.m), dtype=int)
         jend = np.zeros((self.m), dtype=int)
@@ -72,16 +80,24 @@ class JSSP:
         plt.show()
 
 
-# TODO
-def reproduce_reps(reps, size):
-    return reps
+def genetic_stuff(reps, size):
+    crossover_point = int(len(reps[0]) * 0.7)
 
+    crossovered = []
+    for t in  randomize_with_size(reps,  size):
+        rest = t[crossover_point:].copy()
+        random.shuffle(rest)
+        res = [t[:crossover_point] + rest]
+        if random.uniform(0.0, 1.0) <= 0.02:
+            random.shuffle(res)
+        crossovered +=  res
+
+    return crossovered
 
 print("JSSP with genetic algorithms")
-random.seed(datetime.now())
 
 
-size = 200 # population
+size = 30 # population
 population = []
 
 for i in range(size):
@@ -92,30 +108,58 @@ for i in range(size):
     population += [jssp]
 
 
-
+best_makespan = float('inf')
+best_solution = []
 epochs = 100
+lut = []
 for i in range(epochs):
-    print(f"Epoch #{i}")
-    population = sorted(population, key=lambda x: x.makespan)
-    makespans = [p.makespan for p in population]
-    top = population[5:]
-    new_population = reproduce_reps([p.reps for p in top], size)
-    # telemetry
-    # updates
+    
+    table = list(zip(population, [p.calc_makespan() for p in population]))
+    table = sorted(table, key=lambda x: x[1], reverse=False)
+    
+    current_sol, current_best = table[0]
+    lut += [current_best]
+    if current_best <= best_makespan:
+        best_makespan = current_best
+        current_sol = current_sol
+    
 
-# shows 
+    average = sum([x[1] for x in table])/len(table)
 
-# TODO: check RS to fill missing parts
+    print(f"Epoch #{i} Best: {best_makespan} Average: {average}")
+
+    # crossover
+    reps_array = [g[0].rep for g in table[:5]]
+    new_reps = genetic_stuff(randomize_with_size(reps_array, size), size)
+
+    # update pop
+    i = 0
+    for p in population:
+        p.set_reps(new_reps[0])
+        i += 1
 
 
 
+    
+
+    
+model = JSSP()
+model.load_data(jobs, n, m)
+print(" == Best Genetic Evolution == ")
+model.set_reps(best_solution)
+print(" Best makespan:", best_makespan)
+plt.title("Best solution")
+model.plot_graph(best_makespan)
 
 
+plt.title("Genetic algorithm evolution")
 
 
+plt.plot(lut, c='r', label="Makespans")
 
-
-
-
+plt.xlabel("Epoch (random sample)")
+plt.ylabel("Makespan")
+plt.legend()
+plt.show()
 
 
