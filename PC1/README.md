@@ -27,6 +27,8 @@
   [Full Script here](https://github.com/Cesarmosqueira/Advanded-AI/tree/master/PC1/genetic_algorithm_solution.py)
   
 ### Results
+![image](https://user-images.githubusercontent.com/48858334/194401161-196dbe2d-159d-426c-95ca-aff6f31b1759.png)
+
 ![image](https://user-images.githubusercontent.com/48858334/192933733-5d0b9994-a248-4c90-9083-8ceaa402eb81.png)
 
 # Conclusions
